@@ -1193,36 +1193,34 @@ def idle():
     """Idle function that runs continuously - fixed pause functionality"""
     if not game_paused:  # Only update if game is not paused
         update()
-    glutPostRedisplay()  # Always redraw the screen (to show pause message)
+    glutPostRedisplay()
 
 def keyboard(k, x, y):
-    """Handle keyboard input with improved pause handling"""
     global space_pressed, theme, difficulty_timer, difficulty_mode, speed_multiplier, game_paused, time_last
     
-    if k == b'\x1b':  # ESC key - exit game
+    if k == b'\x1b':
         sys.exit()
-    if k == b' ':     # Space key - jump (only when not paused)
+    if k == b' ':
         if not game_paused:
             space_pressed = True
-    if k in [b'a', b'd', b'w', b's']:  # Movement keys (only when not paused)
+    if k in [b'a', b'd', b'w', b's']: 
         if not game_paused:
             move_keys[k.decode()] = True
-    if k == b'r':     # R key - restart game (works even when paused)
+    if k == b'r':   
         reset_game()
-    if k == b't':     # T key - toggle theme (works even when paused)
+    if k == b't': 
         theme = "dark" if theme == "default" else "default"
-    if k == b'p':     # P key - toggle pause
+    if k == b'p':
         game_paused = not game_paused
         if not game_paused:
-            time_last = time.time()  # Reset time reference when unpausing
+            time_last = time.time()
 
 def keyboard_up(k, x, y):
-    """Handle key release with pause consideration"""
     global space_pressed
     
-    if k == b' ':     # Space key released
+    if k == b' ':
         space_pressed = False
-    if k in [b'a', b'd', b'w', b's']:  # Movement keys released
+    if k in [b'a', b'd', b'w', b's']:
         move_keys[k.decode()] = False
 
 def special_keys(key, x, y):
